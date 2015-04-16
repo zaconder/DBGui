@@ -33,15 +33,16 @@ public class DataBaseController
 	 */
 	public DataBaseController(DataBaseAppController dataBaseAppController)
 	{
-		String databaseName = "motorcycle";
-		String pathToDBServer = "localhost";
-		String userName = "root";
-		String password = "";
-//		connectionString = "jdbc:mysql://localhost/motorcycle?user=root";
+		String databaseName = "book_reading";
+		String pathToDBServer = "10.228.5.160";
+		String userName = "z.conder";
+		String password = "cond123";
+//		connectionString = "jdbc:mysql://10.228.5.160/book_reading?user=z.conder&password=cond123";
 		this.baseController = dataBaseAppController;
 		checkDriver();
 		connectionStringBuilder(pathToDBServer, databaseName, userName, password);
 		setupConnection();
+		tableInfo();
 		
 
 	}
@@ -255,7 +256,7 @@ public class DataBaseController
 		} catch (SQLException currentSQLError)
 		{
 			endTime = System.currentTimeMillis();
-			results = new String[][] { { "you get, NOTHING!!!! :D" } };
+			results = new String[][] { { "No Data" } };
 			displayErrors(currentSQLError);
 		}
 		baseController.getTimingInfoList().add(new QueryInfo(query, endTime - startTime));
@@ -270,7 +271,7 @@ public class DataBaseController
 	public String[] getMetaData()
 	{
 		String[] colInfo;
-		String query = "SELECT * FROM `motorcycles`";
+		String query = "SELECT * FROM `authors`";
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 
@@ -292,7 +293,7 @@ public class DataBaseController
 		} catch (SQLException currentSQLError)
 		{
 			endTime = System.currentTimeMillis();
-			colInfo = new String[] { "NOTHING!!" };
+			colInfo = new String[] { "No Data" };
 			displayErrors(currentSQLError);
 		}
 		
@@ -307,7 +308,7 @@ public class DataBaseController
 	public String[][] realInfo()
 	{
 		String[][] results;
-		String query = "SELECT * FROM `motorcycles`";
+		String query = "SELECT * FROM `book_reading`";
 		
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
@@ -383,7 +384,7 @@ public class DataBaseController
 			if (checkForDataViolation())
 			{
 				throw new SQLException("Attempted illigal modification of data", 
-						":( Dont tried to mess up da data state :(",
+						":( Dont try to mess up da data state :(",
 						Integer.MIN_VALUE);
 			}
 

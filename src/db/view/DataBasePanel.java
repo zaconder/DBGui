@@ -80,7 +80,7 @@ public class DataBasePanel extends JPanel
 		
 		cellRenderer = new TableCellWrapRenderer();
 	
-		setupTable();
+		//setupTable();
 		setupPane();
 		setupPanel();
 		setupLayout();
@@ -126,7 +126,7 @@ public class DataBasePanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				tableData = new JTable(new DefaultTableModel(baseController.getDataBase().realInfo(), baseController.getDataBase().getMetaData()));
+				tableData = new JTable(new DefaultTableModel(baseController.getDataBase().tableInfo(), baseController.getDataBase().getMetaData()));
 				displayPane = new JScrollPane(tableData);
 //				String databaseAnswer = baseController.getDataBase().describeTable();
 //				displayArea.setText(databaseAnswer);
@@ -171,7 +171,9 @@ public class DataBasePanel extends JPanel
 	 */
 	private void setupPane()
 	{
-	
-		
+		for(int count = 0; count < baseController.getDataBase().tableInfo().length; count++)
+		{
+			displayArea.append(baseController.getDataBase().tableInfo()[count][0]);
+		}
 	}
 }
