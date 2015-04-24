@@ -1,6 +1,6 @@
 package db.model;
 
-public class QueryInfo
+public class QueryInfo // implements CharSequence
 {
 	/**
 	 * The query being timed.
@@ -40,4 +40,5 @@ public class QueryInfo
 	{
 		return queryTime;
 	}
+
 }

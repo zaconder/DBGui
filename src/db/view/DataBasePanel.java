@@ -38,6 +38,10 @@ public class DataBasePanel extends JPanel
 	 * Adds a Button
 	 */
 	private JButton appButton3;
+	
+	private JButton appButton4;
+	
+	private JButton appButton5;
 	/**
 	 * Adds a text area to the Display
 	 */
@@ -72,6 +76,10 @@ public class DataBasePanel extends JPanel
 		appButton = new JButton("Describe the Query");
 		appButton2 = new JButton("Test the query");
 		appButton3 = new JButton("Insert into the Database");
+		appButton4 = new JButton("read text from file");
+		
+		appButton5 = new JButton("save text to file");
+		
 
 		displayArea = new JTextArea(15, 30);
 		displayPane = new JScrollPane(displayArea);
@@ -110,6 +118,8 @@ public class DataBasePanel extends JPanel
 		this.add(appButton);
 		this.add(appButton2);
 		this.add(appButton3);
+		this.add(appButton4);
+		this.add(appButton5);
 		this.add(displayPane);
 		this.add(password);
 		password.setEchoChar('');
@@ -153,6 +163,33 @@ public class DataBasePanel extends JPanel
 			}
 		});
 		
+		appButton4.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				String savedChat = baseController.readTextFromFile();
+				{
+					if(savedChat.length()<1)
+					{
+						displayArea.setText("no text in file");
+					}
+					else
+					{
+						displayArea.setText(savedChat);
+					}
+				}
+			}
+		});
+		
+		appButton5.addActionListener(new ActionListener()
+		{	
+			public void actionPerformed(ActionEvent click)
+			{
+				String chat = displayArea.getText();
+				baseController.saveText(chat, true, null);
+			}
+		});
+		
 	}
 		
 	/**
@@ -165,6 +202,9 @@ public class DataBasePanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.WEST, appButton2, 160, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.WEST, appButton3, 290, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.NORTH, password, 480, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, appButton4, 300, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.NORTH, appButton5, 300, SpringLayout.NORTH, this);
+		baseLayout.putConstraint(SpringLayout.WEST, appButton5, 155, SpringLayout.WEST, this);
 	}
 	/**
 	 * The pane for the application.

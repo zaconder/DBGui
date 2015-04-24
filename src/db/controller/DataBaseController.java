@@ -37,24 +37,29 @@ public class DataBaseController
 		String pathToDBServer = "10.228.5.160";
 		String userName = "z.conder";
 		String password = "cond123";
-//		connectionString = "jdbc:mysql://10.228.5.160/book_reading?user=z.conder&password=cond123";
+		// connectionString =
+		// "jdbc:mysql://10.228.5.160/book_reading?user=z.conder&password=cond123";
 		this.baseController = dataBaseAppController;
 		checkDriver();
 		connectionStringBuilder(pathToDBServer, databaseName, userName, password);
 		setupConnection();
 		tableInfo();
-		
 
 	}
-	
+
 	/**
-	 * This method will prompt the user to input the information for the DataBase
-	 * ? means to interrupt the code to start sending information
-	 * & means to continue the interruption
-	 * @param pathToDBServer This is the Path to the Database Server
-	 * @param databaseName This is the path to the Database inside the database
-	 * @param userName The user name for the database
-	 * @param password The Password for the database
+	 * This method will prompt the user to input the information for the
+	 * DataBase ? means to interrupt the code to start sending information &
+	 * means to continue the interruption
+	 * 
+	 * @param pathToDBServer
+	 *            This is the Path to the Database Server
+	 * @param databaseName
+	 *            This is the path to the Database inside the database
+	 * @param userName
+	 *            The user name for the database
+	 * @param password
+	 *            The Password for the database
 	 */
 	public void connectionStringBuilder(String pathToDBServer, String databaseName, String userName, String password)
 	{
@@ -151,8 +156,7 @@ public class DataBaseController
 			answer.close();
 			firstStatement.close();
 			endTime = System.currentTimeMillis();
-		}
-		catch (SQLException currentSQLError)
+		} catch (SQLException currentSQLError)
 		{
 			endTime = System.currentTimeMillis();
 			displayErrors(currentSQLError);
@@ -171,7 +175,7 @@ public class DataBaseController
 	{
 		String results = "";
 		String query = "DESCRIBE glove";
-		
+
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 		try
@@ -195,6 +199,32 @@ public class DataBaseController
 
 	}
 
+	public void submitQuery(String currentQuery)
+	{
+		this.currentQuery = currentQuery;
+		long startTime, endTime;
+		startTime = System.currentTimeMillis();
+		endTime = 0;
+		if (!checkForDataViolation())
+		{
+
+			
+			try
+			{
+				Statement submitStatement = databaseConnection.createStatement();
+				submitStatement.executeUpdate(currentQuery);
+				submitStatement.close();
+				endTime = System.currentTimeMillis();
+			} 
+			catch (SQLException currentError)
+			{
+				endTime = System.currentTimeMillis();
+				displayErrors(currentError);
+			}
+		}
+		baseController.getTimingInfoList().add(new QueryInfo(currentQuery, endTime - startTime));
+	}
+
 	/**
 	 * This is where the SQL code gets used and actually inserts data into the
 	 * DataBase.
@@ -204,9 +234,7 @@ public class DataBaseController
 	public int insertSample()
 	{
 		int rowsAffected = 0;
-		String insertQuery = "INSERT INTO `motorcycle`.`motorcycles`"
-							+ " (`id`, `color`, `type_motorcycle`, `top_speed`, `engine_size_cc`, `manufacturer`, `year_made`, `name`)"
-							+ " VALUES (NULL, 'Blue', 'Street', '130', '300', 'honda', '206', 'shadow');";
+		String insertQuery = "INSERT INTO `motorcycle`.`motorcycles`" + " (`id`, `color`, `type_motorcycle`, `top_speed`, `engine_size_cc`, `manufacturer`, `year_made`, `name`)" + " VALUES (NULL, 'Blue', 'Street', '130', '300', 'honda', '206', 'shadow');";
 
 		try
 		{
@@ -231,7 +259,7 @@ public class DataBaseController
 
 		String[][] results;
 		String query = "SHOW TABLES";
-		
+
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 
@@ -296,20 +324,21 @@ public class DataBaseController
 			colInfo = new String[] { "No Data" };
 			displayErrors(currentSQLError);
 		}
-		
+
 		baseController.getTimingInfoList().add(new QueryInfo(query, endTime - startTime));
 		return colInfo;
 	}
 
 	/**
 	 * Grabs the info from a database
+	 * 
 	 * @return The results of the database info
 	 */
 	public String[][] realInfo()
 	{
 		String[][] results;
 		String query = "SELECT * FROM `book_reading`";
-		
+
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 
@@ -347,13 +376,14 @@ public class DataBaseController
 
 	/**
 	 * Will check for any Violations in the code inserted into the database.
+	 * 
 	 * @return
 	 */
 	private boolean checkForDataViolation()
 	{
-		if (currentQuery.toUpperCase().contains(" DROP ")
-				|| currentQuery.toUpperCase().contains(" TRUNCATE ")
-				|| currentQuery.toUpperCase().contains(" SET ")
+		if (currentQuery.toUpperCase().contains(" DROP ") 
+				|| currentQuery.toUpperCase().contains(" TRUNCATE ") 
+				|| currentQuery.toUpperCase().contains(" SET ") 
 				|| currentQuery.toUpperCase().contains(" ALTER "))
 		{
 			return true;
@@ -363,19 +393,58 @@ public class DataBaseController
 		}
 	}
 
+	public String[] getDataBaseColumnNames(String tableName)
+	{
+		String[] cols;
+		currentQuery = "SELECT * FROM `" + tableName + "`";
+		long startTime, endTime;
+		startTime = System.currentTimeMillis();
+
+		try
+		{
+			Statement firstStatement = databaseConnection.createStatement();
+			ResultSet answer = firstStatement.executeQuery(currentQuery);
+			ResultSetMetaData myMeta = answer.getMetaData();
+
+			cols = new String[myMeta.getColumnCount()];
+
+			for (int spot = 0; spot < myMeta.getColumnCount(); spot++)
+			{
+				cols[spot] = myMeta.getCatalogName(spot + 1);
+			}
+
+			answer.close();
+			firstStatement.close();
+			endTime = System.currentTimeMillis();
+		} catch (SQLException currentSQLError)
+		{
+			endTime = System.currentTimeMillis();
+			cols = new String[] { "NOTHING!!" };
+			displayErrors(currentSQLError);
+
+		}
+
+		long queryTime = endTime - startTime;
+		baseController.getTimingInfoList().add(new QueryInfo(currentQuery, queryTime));
+		return cols;
+	}
+
 	/**
 	 * Generic select based query for the DatabaseController. Checks that the
-	 * query will not destroy data by calling the checkForDataViolation method in
-	 * the try/catch.
-	 * @param query The query to be executed on the database. 
-	 * It will be set as the currentQuery for the controller         
-	 * @return the 2d array of results from the query to be displayed in the JTable.
+	 * query will not destroy data by calling the checkForDataViolation method
+	 * in the try/catch.
+	 * 
+	 * @param query
+	 *            The query to be executed on the database. It will be set as
+	 *            the currentQuery for the controller
+	 * @return the 2d array of results from the query to be displayed in the
+	 *         JTable.
 	 */
 	public String[][] selectedQueryResults(String query)
 	{
 		this.currentQuery = query;
 		String[][] results;
-		
+
 		long startTime, endTime;
 		startTime = System.currentTimeMillis();
 
@@ -383,9 +452,7 @@ public class DataBaseController
 		{
 			if (checkForDataViolation())
 			{
-				throw new SQLException("Attempted illigal modification of data", 
-						":( Dont try to mess up da data state :(",
-						Integer.MIN_VALUE);
+				throw new SQLException("Attempted illigal modification of data", ":( Dont try to mess up da data state :(", Integer.MIN_VALUE);
 			}
 
 			Statement firstStatement = databaseConnection.createStatement();
@@ -411,19 +478,17 @@ public class DataBaseController
 		} catch (SQLException currentSQLError)
 		{
 			endTime = System.currentTimeMillis();
-			results = new String[][] {
-										{ "error processing" },
-										{"try sending a better query"},
-										{currentSQLError.getMessage()}
-									};
+			results = new String[][] { { "error processing" }, { "try sending a better query" }, { currentSQLError.getMessage() } };
 			displayErrors(currentSQLError);
 		}
-		
+
 		baseController.getTimingInfoList().add(new QueryInfo(query, endTime - startTime));
 		return results;
 	}
 
 	{
 	}
+	
+	
 
 }
