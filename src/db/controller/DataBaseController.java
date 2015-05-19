@@ -33,10 +33,10 @@ public class DataBaseController
 	 */
 	public DataBaseController(DataBaseAppController dataBaseAppController)
 	{
-		String databaseName = "book_reading";
-		String pathToDBServer = "10.228.5.160";
-		String userName = "z.conder";
-		String password = "cond123";
+		String databaseName = "motorcycle";
+		String pathToDBServer = "localhost";
+		String userName = "root";
+		String password = "";
 		// connectionString =
 		// "jdbc:mysql://10.228.5.160/book_reading?user=z.conder&password=cond123";
 		this.baseController = dataBaseAppController;

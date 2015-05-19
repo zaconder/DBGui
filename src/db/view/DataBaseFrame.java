@@ -18,6 +18,8 @@ public class DataBaseFrame extends JFrame
 		appPanel = new DataBasePanel(baseController);
 		setupFrame();
 		setupListeners();
+		
+		
 	}
 	
 	private void setupFrame()
@@ -29,58 +31,58 @@ public class DataBaseFrame extends JFrame
 	
 	private void setupListeners()
 	{
-		this.addWindowListener(new WindowListener()
-		{
-
-			@Override
-			public void windowOpened(WindowEvent e)
-			{
-				
-				
-			}
-
-			@Override
-			public void windowClosing(WindowEvent e)
-			{
-				baseController.saveText(conversation, appendToEnd, timeingInfoList);
-				
-			}
-
-			@Override
-			public void windowClosed(WindowEvent e)
-			{
-				
-				
-			}
-
-			@Override
-			public void windowIconified(WindowEvent e)
-			{
-				
-				
-			}
-
-			@Override
-			public void windowDeiconified(WindowEvent e)
-			{
-				
-				
-			}
-
-			@Override
-			public void windowActivated(WindowEvent e)
-			{
-				
-				
-			}
-
-			@Override
-			public void windowDeactivated(WindowEvent e)
-			{
-				
-				
-			}
-			
-		});
+//		this.addWindowListener(new WindowListener()
+//		{
+//
+//			@Override
+//			public void windowOpened(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//
+//			@Override
+//			public void windowClosing(WindowEvent e)
+//			{
+//				baseController.saveText(conversation, appendToEnd, timeingInfoList);
+//				
+//			}
+//
+//			@Override
+//			public void windowClosed(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//
+//			@Override
+//			public void windowIconified(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//
+//			@Override
+//			public void windowDeiconified(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//
+//			@Override
+//			public void windowActivated(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//
+//			@Override
+//			public void windowDeactivated(WindowEvent e)
+//			{
+//				
+//				
+//			}
+//			
+//		});
 	}
 }

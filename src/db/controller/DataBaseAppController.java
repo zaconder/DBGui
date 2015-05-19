@@ -119,6 +119,33 @@ public class DataBaseAppController
 		
 	}
 	
+	public void saveTimeingInformation()
+	{
+		try
+		{
+			File saveFile = new File("asldkjfasd.save");
+			PrintWriter writer = new PrintWriter(saveFile);
+			if(saveFile.exists())
+			{
+				for(QueryInfo current : timingInfoList)
+				{
+					writer.println(current.getQuery());
+					writer.println(current.getQueryTime());
+				}
+				writer.close();
+				JOptionPane.showMessageDialog(getAppFrame(), timingInfoList.size() + " QueryInfo objects were saved");
+			}
+			else
+			{
+				JOptionPane.showMessageDialog(getAppFrame(), "File not present. No QueryInfo objects saved");
+			}
+		}
+		catch(IOException current)
+		{
+			this.getDataBase().displayErrors(current);
+		}
+	}
+	
 	public String readTextFromFile()
 	{
 		String fileText = "";
