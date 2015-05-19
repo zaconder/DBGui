@@ -64,11 +64,21 @@ public class DataBaseAppController
 		return database;
 	}
 	
+	/**
+	 * Gets the timing info.
+	 * @return the list for the timing info.
+	 */
 	public ArrayList<QueryInfo> getTimingInfoList()
 	{
 		return timingInfoList;
 	}
 	
+	/**
+	 * This method will save text into a text file.
+	 * @param conversation This is the actual information that is presented on the screen in the application.
+	 * @param appendToEnd This will make sure that all the data will get appended to the end of the file.
+	 * @param timeInfo This is the timeing info for the database, and how long it took to do each query.
+	 */
 	public void saveText(String conversation, boolean appendToEnd, ArrayList<QueryInfo> timeInfo)
 	{
 		String fileName = "/Users/zcon5199/Documents/saved database text.txt";
@@ -119,6 +129,9 @@ public class DataBaseAppController
 		
 	}
 	
+	/**
+	 * This is where it will take the timing information and save it to a file.
+	 */
 	public void saveTimeingInformation()
 	{
 		try
@@ -146,6 +159,10 @@ public class DataBaseAppController
 		}
 	}
 	
+	/**
+	 * This method will allow you to read file from the saved text backup file.
+	 * @return The text from the file.
+	 */
 	public String readTextFromFile()
 	{
 		String fileText = "";
@@ -172,6 +189,9 @@ public class DataBaseAppController
 		return fileText;
 	}
 	
+	/**
+	 * loads the information from the text file.
+	 */
 	private void loadTimingInfo()
 	{
 		File saveFile = new File("save.txt");

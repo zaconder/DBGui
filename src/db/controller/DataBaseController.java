@@ -20,9 +20,24 @@ import db.model.QueryInfo;
  */
 public class DataBaseController
 {
+	/**
+	 * The first part of the connection String.
+	 */
 	private String connectionString;
+	
+	/**
+	 * The information in the connection string that specifies the database.
+	 */
 	private Connection databaseConnection;
+	
+	/**
+	 * The controller for the DatabaseController
+	 */
 	private DataBaseAppController baseController;
+	
+	/**
+	 * Grabs the currentQuery informtaion that will be inputed into the system.
+	 */
 	private String currentQuery;
 
 	/**
@@ -199,6 +214,10 @@ public class DataBaseController
 
 	}
 
+	/**
+	 * This will submit the information in the query to the database.
+	 * @param currentQuery
+	 */
 	public void submitQuery(String currentQuery)
 	{
 		this.currentQuery = currentQuery;
@@ -393,6 +412,11 @@ public class DataBaseController
 		}
 	}
 
+	/**
+	 * This method will get all the column names inside the current table in the database.
+	 * @param tableName
+	 * @return
+	 */
 	public String[] getDataBaseColumnNames(String tableName)
 	{
 		String[] cols;

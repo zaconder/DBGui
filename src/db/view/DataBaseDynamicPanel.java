@@ -14,16 +14,36 @@ import db.controller.DataBaseAppController;
 
 public class DataBaseDynamicPanel extends JPanel
 {
+	/**
+	 * The spring layout for the panel.
+	 */
 	private SpringLayout baseLayout;
 
+	/**
+	 * The send button for the Dynamic Panel.
+	 */
 	private JButton sendButton;
 
+	/**
+	 * The link to the DataBaseAppController for the panel.
+	 */
 	private DataBaseAppController baseController;
 
+	/**
+	 * An array list that stores all the input in the field.
+	 */
 	private ArrayList<JTextField> inputFieldList;
 	
+	/**
+	 * The string for the tableName.
+	 */
 	private String tableName;
-
+	
+	/**
+	 * The main method for the Dynamic Panel.
+	 * @param baseController The link to the DBAppController
+	 * @param tableName The Table name for the current query.
+	 */
 	public DataBaseDynamicPanel(DataBaseAppController baseController, String tableName)
 	{
 		this.baseController = baseController;
@@ -37,6 +57,10 @@ public class DataBaseDynamicPanel extends JPanel
 		setupListeners();
 	}
 
+	/**
+	 * The method to setup the Panel
+	 * @param tableName Takes the table and stores it as a String.
+	 */
 	private void setupPanel(String tableName)
 	{
 		this.setLayout(baseLayout);
@@ -74,11 +98,18 @@ public class DataBaseDynamicPanel extends JPanel
 		}
 	}
 
+	/**
+	 * The layout for the panel.
+	 */
 	private void setupLayout()
 	{
 
 	}
 	
+	/**
+	 * Gets the values inside the current query.
+	 * @return
+	 */
 	private String getValueList()
 	{
 		String values = "(";
@@ -100,6 +131,10 @@ public class DataBaseDynamicPanel extends JPanel
 		return values;
 	}
 	
+	/**
+	 * Gets the list of fields inside the current database.
+	 * @return
+	 */
 	private String getFieldList()
 	{
 		String fields = "(";
@@ -124,6 +159,9 @@ public class DataBaseDynamicPanel extends JPanel
 		return fields;
 	}
 
+	/**
+	 * Sets up the buttons/listeners for the panel.
+	 */
 	private void setupListeners()
 	{
 

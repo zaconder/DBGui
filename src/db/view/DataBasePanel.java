@@ -20,7 +20,13 @@ import db.controller.DataBaseAppController;
 public class DataBasePanel extends JPanel
 {
 	
+	/**
+	 * A custom blueish color.
+	 */
 	Color aColor = new Color(669900);
+	/**
+	 * A custom orange color.
+	 */
 	Color bColor = new Color(0xFF9900);
 	/**
 	 * Adds the DatabaseAppController
@@ -38,9 +44,13 @@ public class DataBasePanel extends JPanel
 	 * Adds a Button
 	 */
 	private JButton appButton3;
-	
+	/**
+	 * Adds a Button
+	 */
 	private JButton appButton4;
-	
+	/**
+	 * Adds a Button
+	 */
 	private JButton appButton5;
 	/**
 	 * Adds a text area to the Display
@@ -67,8 +77,15 @@ public class DataBasePanel extends JPanel
 	 * @param baseController Is the data from the baseController that gets used.
 	 */
 	
+	/**
+	 * The Cell Renderer that will take the information and word wrap it.
+	 */
 	private TableCellWrapRenderer cellRenderer;
 	
+	/**
+	 * The main Panel for the Application.
+	 * @param baseController Grabs all the information and puts it into the panel.
+	 */
 	public DataBasePanel(DataBaseAppController baseController)
 	{
 		this.baseController = baseController;
